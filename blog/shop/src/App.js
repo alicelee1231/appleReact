@@ -2,35 +2,85 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Navbar,Container,Nav,Row,Col,Image } from 'react-bootstrap';
-import imgLogo from './imgTest.png';
+import { Navbar,Container,DropdownButton,Button,Dropdown,ButtonGroup } from 'react-bootstrap';
+import { useState } from 'react';
+import data from './data';
+
+
 
 function App() {
+
+  let [shoes] = useState(data);
+
+
   return (
    <div>
       <Navbar bg='dark' variant="dark">
             <Container>
-            <Navbar.Brand href='#nome'>Navbar</Navbar.Brand>
-            <Nav className='me-auto'>
-              <Nav.Link href='#home'>Home</Nav.Link>
-              <Nav.Link href='#features'>Freatures</Nav.Link>
-              <Nav.Link href='#pricing'>Pricing</Nav.Link>
-            </Nav>
+            <Navbar.Brand href='#nome'>쨈미의 위시리스트</Navbar.Brand>
+            {['Primary', 'Secondary', 'Success'].map(
+        (variant) => (
+          <DropdownButton 
+            as={ButtonGroup}
+            key={variant}
+            id={`dropdown-variants-${variant}`}
+            variant={variant.toLowerCase()}
+            title={variant}
+            size='sm'
+            className='mt-2'
+            data-bs-theme = 'dark'>
+            <Dropdown.Item eventKey="1">Action</Dropdown.Item>
+            <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+            <Dropdown.Item eventKey="3" active>
+              Active Item
+            </Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
+          </DropdownButton>
+        ),
+      )}
+        
             </Container>
+            <Dropdown as={ButtonGroup}>
+        <Dropdown.Toggle id="dropdown-custom-1">Pow! Zoom!</Dropdown.Toggle>
+        <Dropdown.Menu className="super-colors">
+          <Dropdown.Item eventKey="1">Action</Dropdown.Item>
+          <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
+          <Dropdown.Item eventKey="3" active>
+            Active Item
+          </Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>{' '}
+     
       </Navbar>
-      <Row>
-        <Col xs={6} md={4}>
-            <img className='background' src={imgLogo} alt='옷'></img>
-        </Col>
-        <Col xs={6} md={4}>
-          <Image src="holder.js/171x180" roundedCircle />
-        </Col>
-        <Col xs={6} md={4}>
-          <Image src="holder.js/171x180" thumbnail />
-        </Col>
-      </Row>
-   </div>
+      <div className='main-bg'> </div>
+
+      <div>     
+            {/* <Product shoes={shoes[0]}></Product> */}
+            {
+              shoes.map((a,i) => {
+                // return <Product img={shoes[i].image} title={shoes[i].title} price={shoes[i].price}/>
+                return <Product shoes={shoes[i]} i ={i}></Product>
+                
+              })
+
+            }
+
+  </div>
+  </div>
   );
+}
+
+function Product(props){
+  return(
+    <div className='col-md-4'>
+        <img alt='내꺼' src={'img/cap' + (props.i ) + '.jpg'} width='80%'></img>
+              <h5>{props.shoes.title}</h5>
+              <p>{props.shoes.price}</p>
+            </div>
+  )
 }
 
 export default App;
