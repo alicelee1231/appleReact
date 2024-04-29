@@ -2,11 +2,9 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Navbar,Container,DropdownButton,Button,Dropdown,ButtonGroup } from 'react-bootstrap';
+import { Navbar,Container,DropdownButton,Dropdown,ButtonGroup } from 'react-bootstrap';
 import { useState } from 'react';
 import data from './data';
-
-
 
 function App() {
 
@@ -57,26 +55,26 @@ function App() {
       </Navbar>
       <div className='main-bg'> </div>
 
-      <div>     
+      <div > 
+      <div className='row'>
             {/* <Product shoes={shoes[0]}></Product> */}
+
             {
               shoes.map((a,i) => {
-                // return <Product img={shoes[i].image} title={shoes[i].title} price={shoes[i].price}/>
-                return <Product shoes={shoes[i]} i ={i}></Product>
+                return  <Product className='Appa' key={shoes[i].id} shoes={shoes[i]} i ={i}></Product>       
                 
               })
-
             }
-
-  </div>
+      </div>
+    </div>
   </div>
   );
 }
 
 function Product(props){
   return(
-    <div className='col-md-4'>
-        <img alt='내꺼' src={'img/cap' + (props.i ) + '.jpg'} width='80%'></img>
+    <div  className='col-md-4'>
+        <img alt='내꺼' src={'img/cap' + (props.i ) + '.jpg'}   width='50%'></img>
               <h5>{props.shoes.title}</h5>
               <p>{props.shoes.price}</p>
             </div>

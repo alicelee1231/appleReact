@@ -4,8 +4,7 @@ let data = [
         title : "White and Black",
         content : "Born in France",
         price : 120000,
-        // image : 'C:/Users/USER/Desktop/appleReact/blog/shop/src/img/cap0.jpg'
-        image : './img/cap0.jpg'
+        image : './img/cap.jpg',
       },
     
       {
@@ -20,7 +19,7 @@ let data = [
       {
         id : 2,
         title : "Grey Yordan",
-        content : "Born in the States",
+        content : "Born this way",
         price : 130000,
         image : './img/cap2.jpg'
 
