@@ -26,4 +26,12 @@ let data = [
       }
 ]
 
-export default data;
+let products = [
+    {
+      id :1,
+      name : "mine",
+      price : 12222
+    }
+]
+
+export  {data, products};

@@ -11,6 +11,7 @@
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-grid-layout": "^1.4.4",
+    "react-router-dom": "^6.23.0",
     "update": "^0.7.4",
     "web-vitals": "^2.1.4"
   },
