@@ -1,5 +1,5 @@
 /*eslint-diabled*/
-
+/*eslint-disable-next-line;*/
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import {
@@ -19,6 +19,7 @@ import axios from "axios";
 function App() {
   let [shoes, setShoes] = useState(data);
   let [realProducts] = useState(products);
+  let [count, setCount] = useState(1);
 
   //use라고 되어있는건 hook임 -> 훅이란 유용한 것이 들어있는거
   let navigate = useNavigate(); //페이지 이동을 도와줌
@@ -96,20 +97,27 @@ function App() {
       {/* axios 쓰는 방법, url의 경우 서버단에 요청 */}
       <button
         onClick={() => {
-          axios
-            .get("https://codingapple1.github.io/shop/data2.json")
-            .then((data) => {
-              let copy = [...shoes, ...data.data];
-              setShoes(copy);
-              console.log(shoes);
-            })
-            .catch(() => {
-              console.log("실패 ㅅㄱ");
-            });
+          try {
+            setCount(++count);
+            axios
+              .get("https://codingapple1.github.io/shop/data" + count + ".json")
+              .then((data) => {
+                let copy = [...shoes, ...data.data];
+                setShoes(copy);
+              })
+              .catch(() => {
+                if (count > 2) {
+                  alert("3페이지는 없습니다.");
+                }
+              });
+          } catch (error) {
+            alert("faild");
+          }
         }}
       >
         여기!
       </button>
+
       <Routes>
         <Route
           path="/"
@@ -178,9 +186,14 @@ function About() {
 }
 
 function Product(props) {
+  console.log(props.shoes, "여기");
   return (
     <div className="col-md-4">
-      <img alt="내꺼" src={"img/cap" + props.i + ".jpg"} width="50%"></img>
+      <img
+        alt="내꺼"
+        src={"./img/cap" + props.shoes.id + ".jpg"}
+        width="50%"
+      ></img>
       <h5>{props.shoes.title}</h5>
       <p>{props.shoes.price}</p>
     </div>
