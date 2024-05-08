@@ -112,4 +112,16 @@ function TabContent({ tab }) {
   );
 }
 
+// component는 Return이 꼭 있어야함
+// function Tab(){
+// if(tab == 0){
+//   return <div>내용0</div>
+// }else if(tab == 1){
+//   return <div>내용1</div>
+// }
+// }
+
+// props등록이 귀찮으면 {}이렇게 가져와도 됨
+// 예로  function Tab({tab}) {}
+
 export default Detail;
