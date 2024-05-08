@@ -104,4 +104,12 @@ function Detail(props) {
   );
 }
 
+function TabContent({ tab }) {
+  return (
+    <div className="start end">
+      {[<div>내용 0</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+    </div>
+  );
+}
+
 export default Detail;

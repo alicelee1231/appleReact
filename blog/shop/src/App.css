@@ -2,8 +2,17 @@
   text-align: center;
 }
 
+.start {
+  opacity: 0;
+}
+
+/* transition : 애니메이션 주는거, opacity가 변경될 때, 0.5초걸려서 변경해라라는 뜻 */
+.end {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
 /* .pic { */
-  /* ima: url('./img/imgTest.png'); */
+/* ima: url('./img/imgTest.png'); */
 
 /* } */
 
@@ -12,7 +21,7 @@
   pointer-events: none;
 }
 
-.Appa{
+.Appa {
   width: 100000px;
 }
 
@@ -22,9 +31,9 @@
   margin-right: auto;
 }
 
-.main-bg{
+.main-bg {
   height: 300px;
-  background-image: url('./하늘.jpg');
+  background-image: url("./하늘.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -50,7 +59,7 @@
   color: #61dafb;
 }
 
-img{
+img {
   margin-top: 50px;
   height: 150px;
   display: block;
@@ -58,7 +67,7 @@ img{
   margin-right: auto;
 }
 
-div{
+div {
   text-align: center;
 }
 
