@@ -1,7 +1,10 @@
+/*eslint-disable-next-line*/
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-
+import { Nav } from "react-bootstrap";
+import "../App.css";
 // 같은 컴포넌트일 때 아래와 같이 props로 전달해도 가능, bg로 전달할 사항 넣어주기
 let YellowBtn = styled.button`
   background: ${(props) => props.bg};
@@ -24,6 +27,7 @@ function Detail(props) {
   let want = props.shoes.find((x) => x.id == id);
   let [count, setCount] = useState(0);
   let [num, setNum] = useState(true);
+  let [tab, setTab] = useState(0);
 
   const onChange = (e) => {
     setNum(e.target.value);
@@ -100,26 +104,58 @@ function Detail(props) {
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
-    </div>
-  );
-}
-
-function TabContent({ tab }) {
-  return (
-    <div className="start end">
-      {[<div>내용 0</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+      <Nav variant="tabs" defaultActiveKey="link0">
+        <Nav.Item>
+          <Nav.Link onClick={() => setTab(0)} eventKey="link0">
+            버튼 0
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link onClick={() => setTab(1)} eventKey="link1">
+            버튼 1
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link onClick={() => setTab(2)} eventKey="link2">
+            버튼 2
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
+      <Tab1 tab={tab}></Tab1>
     </div>
   );
 }
 
 // component는 Return이 꼭 있어야함
-// function Tab(){
-// if(tab == 0){
-//   return <div>내용0</div>
-// }else if(tab == 1){
-//   return <div>내용1</div>
-// }
-// }
+function Tab1({ tab }) {
+  let [fade, setFade] = useState();
+
+  // state변경 기능이 가까이 있으면 한번만 state변경을 함
+  // 즉 마지막에만 재랜더링해줌
+  // automatic batching기능이라고함
+  useEffect(() => {
+    let a = setTimeout(() => {
+      setFade("end");
+    }, 100);
+    return () => {
+      clearTimeout(a);
+      setFade("");
+    };
+  }, [tab]);
+  // if (props.tab == 0) {
+  //   return <div>내용0</div>;
+  // } else if (props.tab == 1) {
+  //   return <div>내용1</div>;
+  // } else {
+  //   return <div>내용2</div>;
+  // }
+  return (
+    <div className={"start " + fade}>
+      {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+    </div>
+  );
+  // array니까 tab에 들어가는 숫자와 동일한 자리에 있는 내용을 가지고 옴. array의 0번째를 꺼내주세요~
+}
 
 // props등록이 귀찮으면 {}이렇게 가져와도 됨
 // 예로  function Tab({tab}) {}

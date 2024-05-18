@@ -59,6 +59,16 @@
   color: #61dafb;
 }
 
+/* 애니메이션주는 거  */
+.start {
+  opacity: 0;
+}
+
+.end {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
 img {
   margin-top: 50px;
   height: 150px;
