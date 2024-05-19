@@ -1,10 +1,12 @@
 /*eslint-disable-next-line*/
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Nav } from "react-bootstrap";
 import "../App.css";
+import { Context1 } from "./../App";
+
 // 같은 컴포넌트일 때 아래와 같이 props로 전달해도 가능, bg로 전달할 사항 넣어주기
 let YellowBtn = styled.button`
   background: ${(props) => props.bg};
@@ -22,6 +24,7 @@ let NewBtn = styled.button(YellowBtn);
 // ---------------------------------------------------------------------
 
 function Detail(props) {
+  let { stock, shoes } = useContext(Context1);
   let { id } = useParams();
   let [alert, setAlert] = useState(true);
   let want = props.shoes.find((x) => x.id == id);
@@ -65,7 +68,6 @@ function Detail(props) {
 
   //   }  4. useEffect실행 전, 뭔가 실행하려면 언제나 return()=>{}에서 실행
   // })
-
   return (
     <div className="container">
       {alert === true ? (
@@ -129,6 +131,7 @@ function Detail(props) {
 // component는 Return이 꼭 있어야함
 function Tab1({ tab }) {
   let [fade, setFade] = useState();
+  let { stock } = useContext(Context1);
 
   // state변경 기능이 가까이 있으면 한번만 state변경을 함
   // 즉 마지막에만 재랜더링해줌
@@ -151,7 +154,7 @@ function Tab1({ tab }) {
   // }
   return (
     <div className={"start " + fade}>
-      {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+      {[<div>{stock}</div>, <div>내용1</div>, <div>내용2</div>][tab]}
     </div>
   );
   // array니까 tab에 들어가는 숫자와 동일한 자리에 있는 내용을 가지고 옴. array의 0번째를 꺼내주세요~

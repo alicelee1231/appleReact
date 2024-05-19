@@ -10,16 +10,21 @@ import {
   ButtonGroup,
   Nav,
 } from "react-bootstrap";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { data, products } from "./data";
 import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./routes/Detail";
 import axios from "axios";
+import Cart from "./routes/Cart";
+
+// props없어도 다 가져와 쓸 수 있음, state보관함
+export let Context1 = createContext();
 
 function App() {
   let [shoes, setShoes] = useState(data);
   let [realProducts] = useState(products);
   let [count, setCount] = useState(1);
+  let [stock] = useState([10, 11, 12]);
 
   //use라고 되어있는건 hook임 -> 훅이란 유용한 것이 들어있는거
   let navigate = useNavigate(); //페이지 이동을 도와줌
@@ -139,8 +144,18 @@ function App() {
       </Routes>
 
       <Routes>
-        <Route path="/detail/:id" element={<Detail shoes={shoes}></Detail>} />
+        <Route
+          path="/detail/:id"
+          element={
+            // value안에 있는 내용을 context가 감싼 애들이 다 쓸 수 있음
+            // 즉 detail에서 stock, shoes를 모두 다 쓸 수 있음
+            <Context1.Provider value={{ stock, shoes }}>
+              <Detail shoes={shoes}></Detail>
+            </Context1.Provider>
+          }
+        />
 
+        <Route path="/cart" element={<Cart></Cart>}></Route>
         {/* 404페이지 만드는 거, 만약 페이지 주소를 잘 못 쳤을 때 404로 연결하는 거 */}
         <Route path="/about" element={<About />}>
           <Route path="*" element={<div>없는페이지임 바부야</div>}></Route>
