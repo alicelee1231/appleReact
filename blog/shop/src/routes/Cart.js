@@ -1,24 +1,18 @@
+/* eslint-disable */
 import { useDispatch, useSelector } from "react-redux";
-import { increase } from "../store/userSlice";
+import { changeName } from "../store";
 
 function Cart() {
-  let a = useSelector((state) => {
+  let state = useSelector((state) => {
     return state;
   });
-
+  console.log(state.mart);
   //   dispathc는 store에 요청을 보내는 함수
   let dispatch = useDispatch();
 
   return (
     <div>
-      {a.user.name} {a.user.age}의 장바구니
-      <button
-        onClick={() => {
-          dispatch(increase(100));
-        }}
-      >
-        버튼
-      </button>
+      {state.user}의 장바구니
       <table className="table table-striped">
         <thead>
           <tr>
@@ -29,11 +23,20 @@ function Cart() {
           </tr>
         </thead>
         <tbody>
-          {a.mart.map((item, i) => (
+          {state.mart.map((item, i) => (
             <tr key={item.id}>
               <th scope="row">{i + 1}</th>
               <td>{item.name}</td>
               <td>{item.count}</td>
+              <td>
+                <button
+                  onClick={() => {
+                    dispatch(changeName());
+                  }}
+                >
+                  +
+                </button>
+              </td>
               <td>
                 {/* <button
                   onClick={() => {

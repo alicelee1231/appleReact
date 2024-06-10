@@ -3,23 +3,23 @@
 //일반적으로 store라고 명명함
 
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import user from "./store/userSlice";
 
 // useState와 비슷
-// let user = createSlice({
-//   name: "user",
-//   initialState: { name: "sam", age: 20 },
+let user = createSlice({
+  name: "user",
+  initialState: "kim",
+  reducers: {
+    // 함수의 파라미터는 기존의 내용을 가리킴
+    changeName(state) {
+      return "park" + state;
+    },
+    increase(state, a) {
+      state.age += a.pay;
+    },
+  },
+});
 
-//   reducers: {
-//     // 함수의 파라미터는 기존의 내용을 가리킴
-//     changeName(state) {
-//       state.name = "park";
-//     },
-//     increase(state, a) {
-//       state.age += a.pay;
-//     },
-//   },
-// });
+export let { changeName, changeCount } = user.actions;
 
 //함수 빼내는 방법
 
@@ -42,8 +42,6 @@ let mart = createSlice({
     },
   },
 });
-
-export let { changeCount } = user.actions;
 
 export default configureStore({
   reducer: {
