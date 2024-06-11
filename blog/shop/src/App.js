@@ -10,7 +10,7 @@ import {
   ButtonGroup,
   Nav,
 } from "react-bootstrap";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { data, products } from "./data";
 import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./routes/Detail";
@@ -26,6 +26,16 @@ function App() {
   let [count, setCount] = useState(1);
   let [stock] = useState([10, 11, 12]);
 
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify([]));
+  }, []);
+
+  // object저정하는거
+  let obj = { name: "sam" };
+  localStorage.setItem("data", JSON.stringify(obj));
+  let out = localStorage.getItem("data");
+
+  console.log(JSON.parse(out).name);
   //use라고 되어있는건 hook임 -> 훅이란 유용한 것이 들어있는거
   let navigate = useNavigate(); //페이지 이동을 도와줌
 
