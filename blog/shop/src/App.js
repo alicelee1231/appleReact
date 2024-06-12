@@ -16,6 +16,7 @@ import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./routes/Detail";
 import axios from "axios";
 import Cart from "./routes/Cart";
+import { useQuery } from "react-query";
 
 // props없어도 다 가져와 쓸 수 있음, state보관함
 export let Context1 = createContext();
@@ -23,13 +24,24 @@ export let Context1 = createContext();
 function App() {
   let [shoes, setShoes] = useState(data);
   let [realProducts] = useState(products);
-  let [count, setCount] = useState(1);
+  let [count, setCount] = useState(0);
   let [stock] = useState([10, 11, 12]);
 
-  useEffect(() => {
-    localStorage.setItem("watched", JSON.stringify([]));
-  }, []);
+  const b = new Set();
 
+  // useEffect(() => {
+  //   console.log(count + "빨강망토 차차");
+  //   let out = localStorage.getItem("watched");
+  //   out = JSON.parse(out);
+  //   out.push(count);
+  //   localStorage.setItem("watched", JSON.stringify(out));
+  // }, []);
+
+  console.log(b.add(1));
+  console.log(b.add(count++));
+  const handleClick = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
   // object저정하는거
   let obj = { name: "sam" };
   localStorage.setItem("data", JSON.stringify(obj));
@@ -39,15 +51,27 @@ function App() {
   //use라고 되어있는건 hook임 -> 훅이란 유용한 것이 들어있는거
   let navigate = useNavigate(); //페이지 이동을 도와줌
 
+  let result = useQuery("작명", () => {
+    return (
+      axios.get("https://codingapple1.github.io/userdata.json").then((a) => {
+        console.log("요청됨");
+        return a.data;
+      }),
+      { staleTime: 2000 }
+    );
+  });
+
   return (
     <div>
       <Routes>
         <Route path="/about" element={<div>about page</div>} />
       </Routes>
-
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#nome">쨈미의 위시리스트</Navbar.Brand>
+          <Navbar.Brand href="#nome">
+            {result.isLoading && "로딩중"}
+            {result.error && "error"}
+          </Navbar.Brand>
           {["Primary", "Secondary", "Success"].map((variant) => (
             <DropdownButton
               as={ButtonGroup}
@@ -84,7 +108,6 @@ function App() {
           </Dropdown.Menu>
         </Dropdown>{" "}
       </Navbar>
-
       {/* navigate에 숫자가 이동하면 그 숫자만큼 앞으로 이동 요청, -1는 뒤로 한페이지 */}
       <Nav.Link
         onClick={() => {
@@ -93,6 +116,8 @@ function App() {
       >
         home
       </Nav.Link>
+      <button onClick={() => setCount(count++)}>짠</button>
+      <p>count : {count}</p>
       <Nav.Link
         onClick={() => {
           navigate("/detail");
@@ -100,7 +125,6 @@ function App() {
       >
         Detail
       </Nav.Link>
-
       <div className="main-bg"> </div>
       <div style={{ marginTop: "10px" }}>
         <Link to="/" style={{ marginRight: "30px" }}>
@@ -108,7 +132,6 @@ function App() {
         </Link>
         <Link to="/detail">상세페이지</Link>
       </div>
-
       {/* axios 쓰는 방법, url의 경우 서버단에 요청 */}
       <button
         onClick={() => {
@@ -132,7 +155,6 @@ function App() {
       >
         여기!
       </button>
-
       <Routes>
         <Route
           path="/"
@@ -152,7 +174,6 @@ function App() {
           }
         ></Route>
       </Routes>
-
       <Routes>
         <Route
           path="/detail/:id"

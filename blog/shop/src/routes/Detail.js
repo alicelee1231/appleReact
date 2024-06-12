@@ -36,6 +36,14 @@ function Detail(props) {
     setNum(e.target.value);
   };
 
+  useEffect(() => {
+    console.log(want.id + "빨강망토 차차");
+    let out = localStorage.getItem("watched");
+    out = JSON.parse(out);
+    out.push(want.id);
+    localStorage.setItem("watched", JSON.stringify(out));
+  }, []);
+
   const onClick = () => {
     if (isNaN(num) == 1) {
       console.error("Only numbers are allowed");
