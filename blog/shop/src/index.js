@@ -9,6 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import { QueryClient, QueryClientProvider } from "react-query";
+import Etc from "./Etc";
 
 const queryClient = new QueryClient();
 
@@ -17,7 +18,7 @@ root.render(
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <Etc />
       </BrowserRouter>
     </Provider>
   </QueryClientProvider>

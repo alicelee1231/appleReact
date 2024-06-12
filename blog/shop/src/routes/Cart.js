@@ -1,17 +1,35 @@
 /* eslint-disable */
 import { useDispatch, useSelector } from "react-redux";
 import { changeName } from "../store";
+import { memo, useState } from "react";
+
+// 재 렌더링 없애는 법 / memo 꼭 필요할 때만 재렌더링하는것
+let Child = memo(function () {
+  console.log("재렌더링");
+  return <div>child</div>;
+});
 
 function Cart() {
   let state = useSelector((state) => {
     return state;
   });
+
+  let [count, setCount] = useState(0);
+
   console.log(state.mart);
   //   dispathc는 store에 요청을 보내는 함수
   let dispatch = useDispatch();
 
   return (
     <div>
+      <Child></Child>
+      <button
+        onClick={() => {
+          setCount(count++);
+        }}
+      >
+        +
+      </button>
       {state.user}의 장바구니
       <table className="table table-striped">
         <thead>

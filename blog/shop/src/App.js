@@ -10,7 +10,7 @@ import {
   ButtonGroup,
   Nav,
 } from "react-bootstrap";
-import { createContext, useEffect, useState } from "react";
+import { createContext, Suspense, useEffect, useState } from "react";
 import { data, products } from "./data";
 import { Route, Routes, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./routes/Detail";
@@ -63,9 +63,11 @@ function App() {
 
   return (
     <div>
-      <Routes>
-        <Route path="/about" element={<div>about page</div>} />
-      </Routes>
+      <Suspense fallback={<div>로딩중임</div>}>
+        <Routes>
+          <Route path="/about" element={<div>about page</div>} />
+        </Routes>
+      </Suspense>
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="#nome">
